@@ -79,8 +79,6 @@ try:
             print("Error:", result.stderr)
             print("Return Code:", result.returncode)
 
-            # time.sleep(PAUSE_DURATION)
-
             # Resume the connector
             resume_connector()
 

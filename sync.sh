@@ -1,6 +1,27 @@
 #!/bin/bash
 
-docker compose up -d docker-compose.yaml
+docker compose -f docker-compose.yaml up -d
+
+# Wait for Kafka Connect to be ready
+until $(curl --output /dev/null --silent --head --fail http://localhost:8083/connectors/); do
+    printf '.'
+    sleep 5
+done
+
+# Wait for PostgreSQL to be ready
+echo "Waiting for PostgreSQL to start..."
+until pg_isready -h localhost -p 5432; do
+  sleep 5
+done
+
+sleep 10
+
+echo "PostgreSQL is ready. Dropping table..."
+# Drop the table
+PGPASSWORD=postgres psql -h localhost -U postgres -d postgres -c "DROP TABLE IF EXISTS inventory.customers CASCADE; DROP EXTENSION IF EXISTS postgis CASCADE; DROP SCHEMA inventory CASCADE; CREATE SCHEMA inventory;"
+echo "Table 'customers' in schema 'inventory' dropped successfully."
+
+bash ./schema_change.sh
 
 curl -i -X POST http://localhost:8083/connectors/ \
   -H "Accept:application/json" \
@@ -33,7 +54,7 @@ curl -i -X POST http://localhost:8083/connectors/ \
   -H "Content-Type:application/json" \
   -d \
 '{
-    "name": "jdbc-sink-to-postgres",
+    "name": "jdbc-sink-to-postgres2",
     "config": {
         "connector.class": "io.debezium.connector.jdbc.JdbcSinkConnector",
         "topics": "from_mysql_customers",
@@ -51,4 +72,4 @@ curl -i -X POST http://localhost:8083/connectors/ \
 }'
 
 
-nohup python3 pause_on_schema_change.py > /dev/null 2>&1 &
+nohup python3 pause_on_schema_change.py > pause_on_schema_change.log 2>&1 &
