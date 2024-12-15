@@ -12,6 +12,9 @@ echo "#  Starting Script  #"
 echo "#                   #"
 echo "#####################"
 
+# Determine the OS and Architecture
+OS=$(uname -s)
+ARCH=$(uname -m)
 
 # Set URL, ZIP_FILE, and EXTRACTION_DIR based on OS and ARCH
 if [[ "$OS" == "Darwin" ]]; then
