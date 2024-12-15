@@ -12,11 +12,38 @@ echo "#  Starting Script  #"
 echo "#                   #"
 echo "#####################"
 
+
+# Set URL, ZIP_FILE, and EXTRACTION_DIR based on OS and ARCH
+if [[ "$OS" == "Darwin" ]]; then
+    if [[ "$ARCH" == "arm64" ]]; then
+        echo "Running on macOS (ARM architecture)"
+        export PATH=$PATH:rosetta/mac_aarch64/bin
+    elif [[ "$ARCH" == "x86_64" ]]; then
+        echo "Running on macOS (Intel architecture)"
+        export PATH=$PATH:rosetta/mac_x64/bin
+    else
+        echo "Unknown architecture on macOS: $ARCH"
+        exit 1
+    fi
+elif [[ "$OS" == "Linux" ]]; then
+    echo "Running on Linux"
+    if [[ "$ARCH" == "x86_64" ]]; then
+        export PATH=$PATH:rosetta/linux_x64/bin
+    elif [[ "$ARCH" == "arm64" ]]; then
+        echo "Not supported Linux arm64"
+    else
+        echo "Unknown architecture on Linux: $ARCH"
+        exit 1
+    fi
+else
+    echo "Unsupported OS: $OS"
+    exit 1
+fi
+
+
 # Set environment variables
 export ROSETTA_DRIVERS=drivers/*
-export PATH=$PATH:rosetta/bin
 export EXTERNAL_TRANSLATION_FILE=translation/translation.csv
-
 
 # Function to calculate total execution time
 function calculate_execution_time {
