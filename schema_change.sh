@@ -3,9 +3,6 @@
 # AdaptiveScale Inc.
 #
 
-# Source the .env file
-source .env
-
 echo "#####################"
 echo "#                   #"
 echo "#  Starting Script  #"
@@ -45,7 +42,7 @@ fi
 
 
 # Set environment variables
-export ROSETTA_DRIVERS=drivers/*
+export ROSETTA_DRIVERS=$(pwd)/drivers
 export EXTERNAL_TRANSLATION_FILE=translation/translation.csv
 
 # Function to calculate total execution time

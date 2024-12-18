@@ -10,7 +10,7 @@ done
 
 # Wait for PostgreSQL to be ready
 echo "Waiting for PostgreSQL to start..."
-until pg_isready -h localhost -p 5432; do
+until docker exec postgres-target pg_isready -h localhost -p 5432; do
   sleep 5
 done
 
@@ -18,7 +18,7 @@ sleep 10
 
 echo "PostgreSQL is ready. Dropping table..."
 # Drop the table
-PGPASSWORD=postgres psql -h localhost -U postgres -d postgres -c "DROP TABLE IF EXISTS inventory.customers CASCADE; DROP EXTENSION IF EXISTS postgis CASCADE; DROP SCHEMA inventory CASCADE; CREATE SCHEMA inventory;"
+docker exec -e PGPASSWORD=postgres postgres-target psql -h localhost -U postgres -d postgres -c "DROP TABLE IF EXISTS inventory.customers CASCADE; DROP EXTENSION IF EXISTS postgis CASCADE; DROP SCHEMA inventory CASCADE; CREATE SCHEMA inventory;"
 echo "Table 'customers' in schema 'inventory' dropped successfully."
 
 bash ./schema_change.sh
