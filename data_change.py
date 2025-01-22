@@ -87,7 +87,10 @@ try:
             # Define the data payload
             data = {
                 "statement": sql_statement,
-                "encoding": "json"
+                "encoding": "json",
+                "options": {
+                    "current_schema": "inventory"
+                }
             }
 
             # Set headers

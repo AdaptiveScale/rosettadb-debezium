@@ -7,7 +7,7 @@ from confluent_kafka import Consumer, KafkaError
 # Configuration
 KAFKA_BROKER = "localhost:9092"
 DEBEZIUM_TOPIC = "schema-changes.inventory"  # Replace with your Debezium topic
-CONNECTOR_NAME = "jdbc-sink-to-postgres"     # Replace with your connector name
+# CONNECTOR_NAME = "jdbc-sink-to-postgres"     # Replace with your connector name
 KAFKA_CONNECT_URL = "http://localhost:8083/connectors"
 PAUSE_DURATION = 60  # Time to pause the connector (in seconds)
 
@@ -66,7 +66,7 @@ try:
             print(f"Detected schema change: {ddl_statement}")
 
             # Pause the connector
-            pause_connector()
+            # pause_connector()
 
             # Wait for the specified duration to handle the schema change
             print(f"Waiting for rosetta for schema handling...")
@@ -79,8 +79,9 @@ try:
             print("Error:", result.stderr)
             print("Return Code:", result.returncode)
 
+            time.sleep(30)
             # Resume the connector
-            resume_connector()
+            # resume_connector()
 
 except KeyboardInterrupt:
     print("Shutting down...")

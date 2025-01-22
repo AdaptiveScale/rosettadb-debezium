@@ -42,7 +42,7 @@ fi
 
 
 # Set environment variables
-export ROSETTA_DRIVERS=$(pwd)/drivers
+export ROSETTA_DRIVERS=$(pwd)/drivers/*
 export EXTERNAL_TRANSLATION_FILE=translation/translation.csv
 
 # Function to calculate total execution time
@@ -68,12 +68,13 @@ echo "[DEBUG] EXTERNAL_TRANSLATION_FILE=$EXTERNAL_TRANSLATION_FILE"
 echo "[DEBUG] Show rosetta version"
 rosetta --version
 
-echo "[DEBUG] Migrate schema: MySQL to Postgres"
-rosetta extract -s mysql -t postgres
-rosetta compile -s mysql -t postgres
+echo "[DEBUG] Migrate schema: MySQL to Kinetica"
+rosetta extract -s mysql
+rosetta extract -s mysql -t kinetica
+rosetta compile -s mysql -t kinetica
 
-echo "[DEBUG] Applying changes to Postgres"
-rosetta apply -s postgres
+echo "[DEBUG] Applying changes to Kinetica"
+rosetta apply -s kinetica
 
 
 calculate_execution_time
