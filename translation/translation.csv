@@ -137,7 +137,7 @@
 137;;mysql;;mediumint;;kinetica;;int
 138;;mysql;;int unsigned;;kinetica;;int
 139;;mysql;;mediumint unsigned;;kinetica;;int
-140;;mysql;;int;;kinetica;;int
+140;;mysql;;int;;kinetica;;integer
 141;;mysql;;integer;;kinetica;;int
 142;;mysql;;bigint;;kinetica;;long
 143;;mysql;;bigint unsigned;;kinetica;;long
@@ -2359,3 +2359,4 @@
 2545;;kinetica;;BYTES;;kinetica;;bytes
 2546;;postgres;;_text;;oracle;;varchar2
 2547;;kinetica;;UNSIGNED_BIGINT;;kinetica;;UNSIGNED BIGINT
+2548;;kinetica;;int;;kinetica;;integer

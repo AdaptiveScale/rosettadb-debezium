@@ -72,5 +72,5 @@ curl -i -X POST http://localhost:8083/connectors/ \
 # }'
 
 
-nohup python3 pause_on_schema_change.py > pause_on_schema_change.log 2>&1 &
-nohup python3 data_change.py > data_change.log 2>&1 &
+# nohup python3 pause_on_schema_change.py > pause_on_schema_change.log 2>&1 &
+# nohup python3 data_change.py > data_change.log 2>&1 &

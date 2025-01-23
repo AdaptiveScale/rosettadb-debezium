@@ -9,7 +9,7 @@ KAFKA_BROKER = "localhost:9092"
 DEBEZIUM_TOPIC = "from_mysql_customers"
 
 consumer_config = {
-    'bootstrap.servers': KAFKA_BROKER,  # Adjust with your Kafka broker
+    'bootstrap.servers': KAFKA_BROKER,
     'group.id': 'debezium_sql_generator',
     'auto.offset.reset': 'earliest',
 }
@@ -29,7 +29,7 @@ def generate_sql(change_event):
     if not table:
         return "Error: Table name not found."
 
-    if op == 'c':  # Insert
+    if op == 'c' or op == 'r':  # Insert
         after = payload.get('after', {})
         columns = ', '.join(after.keys())
         values = ', '.join(f"'{value}'" if isinstance(value, str) else str(value) for value in after.values())

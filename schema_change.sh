@@ -54,7 +54,7 @@ function calculate_execution_time {
     minutes=$(( (execution_time % 3600) / 60 ))
     seconds=$((execution_time % 60))
 
-    printf "MySQL to Postgres changes migration script total execution time: %02d:%02d:%02d\n" $hours $minutes $seconds
+    printf "MySQL to Kinetica changes migration script total execution time: %02d:%02d:%02d\n" $hours $minutes $seconds
 }
 
 # Start time
